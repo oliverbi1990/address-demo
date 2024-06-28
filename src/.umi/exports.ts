@@ -5,13 +5,7 @@
 export { defineApp } from './core/defineApp'
 export type { RuntimeConfig } from './core/defineApp'
 // plugins
-export { Access, useAccess, useAccessMarkedRoutes } from '/Users/oliverbi/workspace/work/address-demo/src/.umi/plugin-access';
-export { Provider, useModel } from '/Users/oliverbi/workspace/work/address-demo/src/.umi/plugin-model';
-export { useRequest, UseRequestProvider, request, getRequestInstance } from '/Users/oliverbi/workspace/work/address-demo/src/.umi/plugin-request';
 // plugins types.d.ts
-export * from '/Users/oliverbi/workspace/work/address-demo/src/.umi/plugin-access/types.d';
-export * from '/Users/oliverbi/workspace/work/address-demo/src/.umi/plugin-antd/types.d';
-export * from '/Users/oliverbi/workspace/work/address-demo/src/.umi/plugin-request/types.d';
 // @umijs/renderer-*
 export { createBrowserHistory, createHashHistory, createMemoryHistory, Helmet, HelmetProvider, createSearchParams, generatePath, matchPath, matchRoutes, Navigate, NavLink, Outlet, resolvePath, useLocation, useMatch, useNavigate, useOutlet, useOutletContext, useParams, useResolvedPath, useRoutes, useSearchParams, useAppData, useClientLoaderData, useLoaderData, useRouteProps, useSelectedRoutes, useServerLoaderData, renderClient, __getRoot, Link, useRouteData, __useFetcher, withRouter } from '/Users/oliverbi/workspace/work/address-demo/node_modules/.pnpm/@umijs+renderer-react@4.3.0_react-dom@18.3.1_react@18.3.1/node_modules/@umijs/renderer-react';
 export type { History, ClientLoader } from '/Users/oliverbi/workspace/work/address-demo/node_modules/.pnpm/@umijs+renderer-react@4.3.0_react-dom@18.3.1_react@18.3.1/node_modules/@umijs/renderer-react'

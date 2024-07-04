@@ -1,56 +1,33 @@
-import { EditOutlined } from '@ant-design/icons';
+import { EditOutlined, PlusOutlined } from '@ant-design/icons';
 import {
   Button,
   Card,
-  DatePicker,
-  Form,
-  Input,
+  Divider,
+  List,
   Modal,
-  Select,
-  Table,
-  TableProps,
+  Space,
+  Tooltip,
   Typography,
   message,
 } from 'antd';
 import { useEffect, useState } from 'react';
+import AddressForm from './components/AddressForm';
 import styles from './index.less';
 
-interface IAddress {
-  takeEffectTime: string;
-  countryRegion: string;
+export interface IAddress {
+  type?: string;
+  country?: string;
+  state?: string;
+  city?: string;
   address1: string;
-  address2: string;
+  address2?: string;
+  zipCode?: string;
+  alternateList?: IAddress[];
 }
 
-const DemoPage: React.FC = () => {
-  const [form] = Form.useForm();
+const Demo: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [addressList, setAddressList] = useState<IAddress[]>([]);
-
-  const tableColumns: TableProps<IAddress>['columns'] = [
-    {
-      title: 'Take Effect Time',
-      dataIndex: 'takeEffectTime',
-      key: 'takeEffectTime',
-    },
-    {
-      title: 'Country/Region',
-      dataIndex: 'countryRegion',
-      key: 'countryRegion',
-    },
-    {
-      title: 'Address1',
-      dataIndex: 'address1',
-      key: 'address1',
-      render: (text) => text || '-',
-    },
-    {
-      title: 'Address2',
-      dataIndex: 'address2',
-      key: 'address2',
-      render: (text) => text || '-',
-    },
-  ];
 
   useEffect(() => {
     try {
@@ -61,88 +38,123 @@ const DemoPage: React.FC = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (addressList.length) {
-      localStorage.setItem('addressList', JSON.stringify(addressList));
-    }
-  }, [addressList]);
-
   return (
     <div className={styles.container}>
       <Card>
         <div className={styles.header}>
-          <Typography.Title level={4}>Home Address</Typography.Title>
+          <Typography.Title level={4}>Address List</Typography.Title>
           <Button
-            type="primary"
+            type='primary'
             icon={<EditOutlined />}
             onClick={() => {
               setIsModalOpen(true);
             }}
           >
-            Add
+            Edit
           </Button>
         </div>
         <div className={styles.body}>
-          <Table rowKey="id" columns={tableColumns} dataSource={addressList} />
+          <List
+            header={null}
+            footer={null}
+            bordered
+            dataSource={addressList}
+            renderItem={({
+              country,
+              state,
+              city,
+              address1,
+              address2,
+              zipCode,
+            }) => (
+              <List.Item>{`${address1 || '-'}${
+                address2 ? `(${address2})` : ''
+              }, ${city || '-'}, ${state || '-'}, ${country || '-'}${
+                zipCode ? ` ${zipCode}` : ''
+              }`}</List.Item>
+            )}
+          />
         </div>
       </Card>
       <Modal
-        title="Add Address"
+        title={
+          <div className={styles.modalTitle}>
+            <Space>
+              <Typography.Title level={4}>Edit Address</Typography.Title>
+              <Tooltip title='Add Address'>
+                <Button
+                  size='small'
+                  shape='circle'
+                  icon={<PlusOutlined />}
+                  onClick={() => {
+                    setAddressList([
+                      ...addressList,
+                      {
+                        type: '',
+                        country: '',
+                        city: '',
+                        state: '',
+                        address1: '',
+                        address2: '',
+                        zipCode: '',
+                        alternateList: [
+                          {
+                            city: '',
+                            state: '',
+                            address1: '',
+                            address2: '',
+                            zipCode: '',
+                          },
+                          {
+                            city: '',
+                            state: '',
+                            address1: '',
+                            address2: '',
+                            zipCode: '',
+                          },
+                        ],
+                      },
+                    ]);
+                  }}
+                />
+              </Tooltip>
+            </Space>
+          </div>
+        }
         width={800}
         open={isModalOpen}
         onOk={() => {
-          setAddressList([
-            ...addressList,
-            {
-              id: addressList.length + 1,
-              ...(form.getFieldsValue() || {}),
-              takeEffectTime: form
-                .getFieldValue('takeEffectTime')
-                ?.format('YYYY-MM-DD'),
-            },
-          ]);
-          message.success('add address success');
+          message.success('Success');
           setIsModalOpen(false);
+          localStorage.setItem('addressList', JSON.stringify(addressList));
         }}
         onCancel={() => {
           setIsModalOpen(false);
+          const list = localStorage.getItem('addressList');
+          setAddressList(JSON.parse(list || '[]'));
         }}
       >
-        <Form
-          form={form}
-          labelCol={{ span: 8 }}
-          wrapperCol={{ span: 8 }}
-          layout="horizontal"
-        >
-          <Form.Item
-            label="Take Effect Time"
-            name="takeEffectTime"
-            rules={[{ required: true }]}
-          >
-            <DatePicker />
-          </Form.Item>
-          <Form.Item
-            label="Country/Region"
-            name="countryRegion"
-            rules={[{ required: true }]}
-          >
-            <Select>
-              <Select.Option value="United States">United States</Select.Option>
-              <Select.Option value="China">China</Select.Option>
-              <Select.Option value="Germany">Germany</Select.Option>
-              <Select.Option value="India">India</Select.Option>
-            </Select>
-          </Form.Item>
-          <Form.Item label="Address1" name="address1">
-            <Input />
-          </Form.Item>
-          <Form.Item label="Address2" name="address2">
-            <Input />
-          </Form.Item>
-        </Form>
+        {addressList.map((addressItem, index) => {
+          return (
+            <div key={index}>
+              <AddressForm
+                data={addressItem}
+                onChange={values => {
+                  addressList[index] = values;
+                  setAddressList([...addressList]);
+                }}
+                onDelete={() => {
+                  addressList.splice(index, 1);
+                  setAddressList([...addressList]);
+                }}
+              />
+              {index !== addressList.length - 1 ? <Divider /> : null}
+            </div>
+          );
+        })}
       </Modal>
     </div>
   );
 };
 
-export default DemoPage;
+export default Demo;

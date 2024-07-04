@@ -27,7 +27,7 @@
         "src/.umi/*"
       ],
       "@umijs/max": [
-        "/Users/oliverbi/workspace/work/address-demo/node_modules/.pnpm/umi@4.3.0_@babel+core@7.24.7_@types+react@18.3.3_eslint@8.35.0_prettier@2.8.8_react-dom@18.3._5rkjlz6vla4ss54cvlwkdhrxem/node_modules/umi"
+        "/Users/oliverbi/workspace/learn/address-demo/node_modules/_umi@4.3.0@umi"
       ],
       "@umijs/max/typings": [
         "src/.umi/typings"

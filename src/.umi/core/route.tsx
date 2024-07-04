@@ -19,10 +19,11 @@ if (process.env.NODE_ENV === 'development') {
 import React from 'react';
 
 export async function getRoutes() {
-  const routes = {"Demo/index":{"path":"Demo","id":"Demo/index"}} as const;
+  const routes = {"Demo/components/AddressForm/index":{"path":"Demo/components/AddressForm","id":"Demo/components/AddressForm/index"},"Demo/index":{"path":"Demo","id":"Demo/index"}} as const;
   return {
     routes,
     routeComponents: {
+'Demo/components/AddressForm/index': React.lazy(() => import(/* webpackChunkName: "src__pages__Demo__components__AddressForm__index" */'../../../src/pages/Demo/components/AddressForm/index.tsx')),
 'Demo/index': React.lazy(() => import(/* webpackChunkName: "src__pages__Demo__index" */'../../../src/pages/Demo/index.tsx')),
 },
   };

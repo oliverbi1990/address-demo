@@ -7,10 +7,10 @@ export type { RuntimeConfig } from './core/defineApp'
 // plugins
 // plugins types.d.ts
 // @umijs/renderer-*
-export { createBrowserHistory, createHashHistory, createMemoryHistory, Helmet, HelmetProvider, createSearchParams, generatePath, matchPath, matchRoutes, Navigate, NavLink, Outlet, resolvePath, useLocation, useMatch, useNavigate, useOutlet, useOutletContext, useParams, useResolvedPath, useRoutes, useSearchParams, useAppData, useClientLoaderData, useLoaderData, useRouteProps, useSelectedRoutes, useServerLoaderData, renderClient, __getRoot, Link, useRouteData, __useFetcher, withRouter } from '/Users/oliverbi/workspace/work/address-demo/node_modules/.pnpm/@umijs+renderer-react@4.3.0_react-dom@18.3.1_react@18.3.1/node_modules/@umijs/renderer-react';
-export type { History, ClientLoader } from '/Users/oliverbi/workspace/work/address-demo/node_modules/.pnpm/@umijs+renderer-react@4.3.0_react-dom@18.3.1_react@18.3.1/node_modules/@umijs/renderer-react'
+export { createBrowserHistory, createHashHistory, createMemoryHistory, Helmet, HelmetProvider, createSearchParams, generatePath, matchPath, matchRoutes, Navigate, NavLink, Outlet, resolvePath, useLocation, useMatch, useNavigate, useOutlet, useOutletContext, useParams, useResolvedPath, useRoutes, useSearchParams, useAppData, useClientLoaderData, useLoaderData, useRouteProps, useSelectedRoutes, useServerLoaderData, renderClient, __getRoot, Link, useRouteData, __useFetcher, withRouter } from '/Users/oliverbi/workspace/learn/address-demo/node_modules/_@umijs_renderer-react@4.3.0@@umijs/renderer-react';
+export type { History, ClientLoader } from '/Users/oliverbi/workspace/learn/address-demo/node_modules/_@umijs_renderer-react@4.3.0@@umijs/renderer-react'
 // umi/client/client/plugin
-export { ApplyPluginsType, PluginManager } from '/Users/oliverbi/workspace/work/address-demo/node_modules/.pnpm/umi@4.3.0_@babel+core@7.24.7_@types+react@18.3.3_eslint@8.35.0_prettier@2.8.8_react-dom@18.3._5rkjlz6vla4ss54cvlwkdhrxem/node_modules/umi/client/client/plugin.js';
+export { ApplyPluginsType, PluginManager } from '/Users/oliverbi/workspace/learn/address-demo/node_modules/_umi@4.3.0@umi/client/client/plugin.js';
 export { history, createHistory } from './core/history';
 export { terminal } from './core/terminal';
 // react ssr

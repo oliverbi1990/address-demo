@@ -1,6 +1,7 @@
 import { DeleteOutlined, OpenAIOutlined } from '@ant-design/icons';
 import { Button, Space } from 'antd';
 import { useEffect, useState } from 'react';
+import AIModal from './components/AIModal';
 import AddressForm from './components/AddressForm';
 import styles from './index.less';
 
@@ -45,6 +46,9 @@ const createAddress = () => {
 
 const Edit: React.FC = () => {
   const [addressList, setAddressList] = useState<IAddress[]>([]);
+  const [isAIModalOpen, setAIModalOpen] = useState(false);
+  const [isAISearching, setAISearching] = useState(false);
+  const [aiSearchOptions, setAISearchOptions] = useState([]);
 
   useEffect(() => {
     try {
@@ -78,7 +82,13 @@ const Edit: React.FC = () => {
         {addressList.map((addressItem, index) => (
           <div key={index} className={styles.addressItem}>
             <div className={styles.option}>
-              <Button icon={<OpenAIOutlined />} type='text'>
+              <Button
+                icon={<OpenAIOutlined />}
+                type='text'
+                onClick={() => {
+                  setAIModalOpen(true);
+                }}
+              >
                 Spotlight
               </Button>
               <Button
@@ -124,6 +134,15 @@ const Edit: React.FC = () => {
           </Space>
         </div>
       </div>
+      <AIModal
+        open={isAIModalOpen}
+        onOk={() => {
+          setAIModalOpen(false);
+        }}
+        onCancel={() => {
+          setAIModalOpen(false);
+        }}
+      ></AIModal>
     </div>
   );
 };

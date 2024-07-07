@@ -1,11 +1,12 @@
-import { Divider, Input, Modal, Select } from 'antd';
+import { Descriptions, Divider, Input, Modal, Select } from 'antd';
+import { DefaultOptionType } from 'antd/es/select';
 import { useState } from 'react';
 import { IAddress } from '../..';
 import styles from './index.less';
 
 interface IProps {
   open?: boolean;
-  onOk?: () => void;
+  onOk?: (address: IAddress) => void;
   onCancel?: () => void;
 }
 
@@ -33,15 +34,24 @@ const mockAISearch: () => Promise<IAddress[]> = () => {
 };
 
 const AIModal: React.FC<IProps> = ({ open, onOk, onCancel }) => {
+  const [currentAddress, setCurrentAddress] = useState<IAddress>();
   const [isAISearching, setAISearching] = useState(false);
-  const [aiSearchOptions, setAISearchOptions] = useState<IAddress[]>([]);
+  const [aiSearchOptions, setAISearchOptions] = useState<
+    IAddress & DefaultOptionType[]
+  >([]);
 
   const onAISearch = async () => {
     try {
       setAISearchOptions([]);
       setAISearching(true);
       const result = await mockAISearch();
-      setAISearchOptions(result);
+      setAISearchOptions(
+        result.map((item, index) => ({
+          ...item,
+          label: index,
+          value: index,
+        }))
+      );
     } catch {
       setAISearchOptions([]);
     } finally {
@@ -70,7 +80,12 @@ const AIModal: React.FC<IProps> = ({ open, onOk, onCancel }) => {
       title={'Spotlight'}
       open={open}
       okText={'Apply'}
-      onOk={onOk}
+      okButtonProps={{
+        disabled: !currentAddress,
+      }}
+      onOk={() => {
+        if (currentAddress) onOk?.(currentAddress);
+      }}
       onCancel={onCancel}
     >
       <>
@@ -87,12 +102,33 @@ const AIModal: React.FC<IProps> = ({ open, onOk, onCancel }) => {
             style={{ width: '100%' }}
             loading={isAISearching}
             optionRender={(option) => renderAddress(option.data as IAddress)}
+            onSelect={(_value, option) => {
+              setCurrentAddress(option as IAddress);
+            }}
           />
         </div>
         <Divider>or</Divider>
         <div className={styles.addressAIPaste}>
           <Input.TextArea placeholder='Paste your address text here' rows={4} />
         </div>
+        {currentAddress ? (
+          <div className={styles.addressAIResult}>
+            <Descriptions title={<div className={styles.title}>Address Info</div>}>
+              <Descriptions.Item label='Country/Region'>
+                {currentAddress?.country || '-'}
+              </Descriptions.Item>
+              <Descriptions.Item label='State'>
+                {currentAddress?.state || '-'}
+              </Descriptions.Item>
+              <Descriptions.Item label='City'>
+                {currentAddress?.city || '-'}
+              </Descriptions.Item>
+              <Descriptions.Item label='Address'>
+                {currentAddress?.address1 || '-'}
+              </Descriptions.Item>
+            </Descriptions>
+          </div>
+        ) : null}
       </>
     </Modal>
   );

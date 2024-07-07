@@ -46,9 +46,8 @@ const createAddress = () => {
 
 const Edit: React.FC = () => {
   const [addressList, setAddressList] = useState<IAddress[]>([]);
+  const [currentAddress, setCurrentAddress] = useState<IAddress>();
   const [isAIModalOpen, setAIModalOpen] = useState(false);
-  const [isAISearching, setAISearching] = useState(false);
-  const [aiSearchOptions, setAISearchOptions] = useState([]);
 
   useEffect(() => {
     try {
@@ -86,6 +85,7 @@ const Edit: React.FC = () => {
                 icon={<OpenAIOutlined />}
                 type='text'
                 onClick={() => {
+                  setCurrentAddress(addressItem);
                   setAIModalOpen(true);
                 }}
               >
@@ -136,7 +136,16 @@ const Edit: React.FC = () => {
       </div>
       <AIModal
         open={isAIModalOpen}
-        onOk={() => {
+        onOk={(address) => {
+          const index = addressList.findIndex(
+            (item) => item === currentAddress
+          );
+          if (index !== -1) {
+            addressList[index] = {
+              ...(addressList[index] || {}),
+              ...(address || {}),
+            };
+          }
           setAIModalOpen(false);
         }}
         onCancel={() => {

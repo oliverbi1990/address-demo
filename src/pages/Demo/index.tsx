@@ -1,32 +1,12 @@
-import { EditOutlined, PlusOutlined } from '@ant-design/icons';
-import {
-  Button,
-  Card,
-  Divider,
-  List,
-  Modal,
-  Space,
-  Tooltip,
-  Typography,
-  message,
-} from 'antd';
+import { EnvironmentOutlined } from '@ant-design/icons';
+import { history } from '@umijs/max';
+import { List } from 'antd';
+import cls from 'classnames';
 import { useEffect, useState } from 'react';
-import AddressForm from './components/AddressForm';
+import { IAddress } from '../Edit';
 import styles from './index.less';
 
-export interface IAddress {
-  type?: string;
-  country?: string;
-  state?: string;
-  city?: string;
-  address1: string;
-  address2?: string;
-  zipCode?: string;
-  alternateList?: IAddress[];
-}
-
 const Demo: React.FC = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [addressList, setAddressList] = useState<IAddress[]>([]);
 
   useEffect(() => {
@@ -38,121 +18,52 @@ const Demo: React.FC = () => {
     }
   }, []);
 
+  const renderAddressDetail = (addressItem: IAddress) => {
+    const { address1, address2, city, state, country, zipCode } =
+      addressItem || {};
+    return `${zipCode ? `${zipCode} ` : ''}${address1 || '-'}${address2 ? `(${address2})` : ''}, ${
+      city || '-'
+    }, ${state || '-'}, ${country || '-'}`;
+  };
+
   return (
     <div className={styles.container}>
-      <Card>
-        <div className={styles.header}>
-          <Typography.Title level={4}>Address List</Typography.Title>
-          <Button
-            type='primary'
-            icon={<EditOutlined />}
-            onClick={() => {
-              setIsModalOpen(true);
-            }}
-          >
-            Edit
-          </Button>
-        </div>
-        <div className={styles.body}>
+      <div className={styles.card}>
+        <div
+          className={styles.editBtn}
+          onClick={() => {
+            history.push('/edit');
+          }}
+        ></div>
+        <div className={styles.addressList}>
           <List
-            header={null}
-            footer={null}
-            bordered
+            itemLayout='horizontal'
             dataSource={addressList}
-            renderItem={({
-              country,
-              state,
-              city,
-              address1,
-              address2,
-              zipCode,
-            }) => (
-              <List.Item>{`${address1 || '-'}${
-                address2 ? `(${address2})` : ''
-              }, ${city || '-'}, ${state || '-'}, ${country || '-'}${
-                zipCode ? ` ${zipCode}` : ''
-              }`}</List.Item>
+            renderItem={(addressItem) => (
+              <List.Item>
+                <List.Item.Meta
+                  avatar={
+                    <div
+                      className={cls(
+                        styles.addressIcon,
+                        styles[addressItem.type || '']
+                      )}
+                    >
+                      <EnvironmentOutlined />
+                    </div>
+                  }
+                  title={addressItem.type}
+                  description={
+                    <div className={styles.addressDetail}>
+                      {renderAddressDetail(addressItem)}
+                    </div>
+                  }
+                />
+              </List.Item>
             )}
           />
         </div>
-      </Card>
-      <Modal
-        title={
-          <div className={styles.modalTitle}>
-            <Space>
-              <Typography.Title level={4}>Edit Address</Typography.Title>
-              <Tooltip title='Add Address'>
-                <Button
-                  size='small'
-                  shape='circle'
-                  icon={<PlusOutlined />}
-                  onClick={() => {
-                    setAddressList([
-                      ...addressList,
-                      {
-                        type: '',
-                        country: '',
-                        city: '',
-                        state: '',
-                        address1: '',
-                        address2: '',
-                        zipCode: '',
-                        alternateList: [
-                          {
-                            city: '',
-                            state: '',
-                            address1: '',
-                            address2: '',
-                            zipCode: '',
-                          },
-                          {
-                            city: '',
-                            state: '',
-                            address1: '',
-                            address2: '',
-                            zipCode: '',
-                          },
-                        ],
-                      },
-                    ]);
-                  }}
-                />
-              </Tooltip>
-            </Space>
-          </div>
-        }
-        width={800}
-        open={isModalOpen}
-        onOk={() => {
-          message.success('Success');
-          setIsModalOpen(false);
-          localStorage.setItem('addressList', JSON.stringify(addressList));
-        }}
-        onCancel={() => {
-          setIsModalOpen(false);
-          const list = localStorage.getItem('addressList');
-          setAddressList(JSON.parse(list || '[]'));
-        }}
-      >
-        {addressList.map((addressItem, index) => {
-          return (
-            <div key={index}>
-              <AddressForm
-                data={addressItem}
-                onChange={values => {
-                  addressList[index] = values;
-                  setAddressList([...addressList]);
-                }}
-                onDelete={() => {
-                  addressList.splice(index, 1);
-                  setAddressList([...addressList]);
-                }}
-              />
-              {index !== addressList.length - 1 ? <Divider /> : null}
-            </div>
-          );
-        })}
-      </Modal>
+      </div>
     </div>
   );
 };

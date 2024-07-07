@@ -1,0 +1,75 @@
+.container {
+  position: relative;
+  overflow: hidden;
+  margin: 0 auto;
+  width: 1440px;
+  min-height: 100vh;
+  background-size: 1440px 295px;
+  background-image: url('~@/assets/page-bg-2.png');
+  background-repeat: no-repeat;
+  background-position: top;
+  background-color: #f4f5f6;
+}
+
+.addBtn {
+  position: absolute;
+  right: 50px;
+  top: 90px;
+  line-height: 24px;
+  font-size: 12px;
+  border-radius: 6px;
+  padding: 0 8px;
+  color: #2a62d1;
+  font-weight: bold;
+  border: 1px solid #bdc3c9;
+  cursor: pointer;
+}
+
+.body {
+  overflow: auto;
+  margin-top: 295px;
+  padding: 16px 48px 24px;
+  height: calc(100vh - 295px);
+  box-sizing: border-box;
+}
+
+.addressItem {
+  .option {
+    display: flex;
+    justify-content: flex-end;
+    padding: 6px 0;
+    :global {
+      .ant-btn-text {
+        color: #2a62d1;
+      }
+    }
+  }
+
+  .card {
+    border: 1px solid #e2e4e7;
+    padding: 24px;
+    background-color: #fff;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03),
+      0 1px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px 0 rgba(0, 0, 0, 0.02);
+  }
+}
+
+.addressConfirm {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: #fff;
+  border: 1px solid #e2e4e7;
+  height: 54px;
+  border-radius: 12px;
+  padding: 0 12px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03),
+      0 1px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px 0 rgba(0, 0, 0, 0.02);
+  :global {
+    .ant-btn-text {
+      color: #2a62d1;
+    }
+  }
+}

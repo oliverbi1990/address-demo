@@ -19,12 +19,13 @@ if (process.env.NODE_ENV === 'development') {
 import React from 'react';
 
 export async function getRoutes() {
-  const routes = {"Demo/components/AddressForm/index":{"path":"Demo/components/AddressForm","id":"Demo/components/AddressForm/index"},"Demo/index":{"path":"Demo","id":"Demo/index"}} as const;
+  const routes = {"Edit/components/AddressForm/index":{"path":"Edit/components/AddressForm","id":"Edit/components/AddressForm/index"},"Demo/index":{"path":"Demo","id":"Demo/index"},"Edit/index":{"path":"Edit","id":"Edit/index"}} as const;
   return {
     routes,
     routeComponents: {
-'Demo/components/AddressForm/index': React.lazy(() => import(/* webpackChunkName: "src__pages__Demo__components__AddressForm__index" */'../../../src/pages/Demo/components/AddressForm/index.tsx')),
+'Edit/components/AddressForm/index': React.lazy(() => import(/* webpackChunkName: "src__pages__Edit__components__AddressForm__index" */'../../../src/pages/Edit/components/AddressForm/index.tsx')),
 'Demo/index': React.lazy(() => import(/* webpackChunkName: "src__pages__Demo__index" */'../../../src/pages/Demo/index.tsx')),
+'Edit/index': React.lazy(() => import(/* webpackChunkName: "src__pages__Edit__index" */'../../../src/pages/Edit/index.tsx')),
 },
   };
 }

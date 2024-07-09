@@ -1,12 +1,41 @@
 .addressAIModal {
-  :global {
-    .ant-modal-body {
-      margin-top: 12px;
+  .addressAIBody {
+    position: relative;
+    .addressAILoading {
+      position: absolute;
+      left: -24px;
+      right: -24px;
+      top: -24px;
+      bottom: -24px;
+      background-color: rgba(255, 255, 255, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .loadingWrapper {
+        position: relative;
+        width: 320px;
+        height: 200px;
+        background-size: 320px 200px;
+        background-image: url('~@/assets/loading-bg.png');
+      }
+
+      .loadingGif {
+        position: absolute;
+        right: -20px;
+        top: -10px;
+      }
     }
   }
 
-  .addressAIPaste {
-    margin-top: 24px;
+  .addressAIInput {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .addressAIBtn {
+    margin-top: 12px;
   }
 
   .addressAIResult {
@@ -20,6 +49,10 @@
 
     .title {
       font-size: 14px;
+    }
+
+    .alternateList {
+      margin-top: 12px;
     }
   }
 }

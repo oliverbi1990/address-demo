@@ -1,4 +1,4 @@
-import { DeleteOutlined, OpenAIOutlined } from '@ant-design/icons';
+import { DeleteOutlined, SketchOutlined } from '@ant-design/icons';
 import { Button, Space } from 'antd';
 import { useEffect, useState } from 'react';
 import AIModal from './components/AIModal';
@@ -27,6 +27,7 @@ const createAddress = () => {
     zipCode: '',
     alternateList: [
       {
+        country: '',
         state: '',
         city: '',
         address1: '',
@@ -34,6 +35,7 @@ const createAddress = () => {
         zipCode: '',
       },
       {
+        country: '',
         state: '',
         city: '',
         address1: '',
@@ -82,14 +84,14 @@ const Edit: React.FC = () => {
           <div key={index} className={styles.addressItem}>
             <div className={styles.option}>
               <Button
-                icon={<OpenAIOutlined />}
+                icon={<SketchOutlined />}
                 type='text'
                 onClick={() => {
                   setCurrentAddress(addressItem);
                   setAIModalOpen(true);
                 }}
               >
-                Spotlight
+                AI Address AutoFill
               </Button>
               <Button
                 icon={<DeleteOutlined />}

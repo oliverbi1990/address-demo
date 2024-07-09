@@ -100,6 +100,9 @@ const AddressForm: React.FC<IProps> = ({ data, onChange }) => {
             }}
           >
             <div className={styles.formSubTitle}>Alternative Language 1</div>
+            <Form.Item label='Country/Region' name='country'>
+              <Input />
+            </Form.Item>
             <Form.Item label='State' name='state'>
               <Input />
             </Form.Item>
@@ -132,6 +135,9 @@ const AddressForm: React.FC<IProps> = ({ data, onChange }) => {
             }}
           >
             <div className={styles.formSubTitle}>Alternative Language 2</div>
+            <Form.Item label='Country/Region' name='country'>
+              <Input />
+            </Form.Item>
             <Form.Item label='State' name='state'>
               <Input />
             </Form.Item>
